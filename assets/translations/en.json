@@ -1,0 +1,20 @@
+{
+  "kHello": "Hello",
+  "kWelcome": "Welcome from ရွှေတိုက်စံ",
+  "kNameHint": "Enter your name",
+  "kPhoneHint": "Enter your email or phone",
+  "kPwdHint": "Enter your password",
+  "kPhoneErrorHint": "Need to enter prefix 09(if Myanmar)",
+  "kPwdError": "Password length must have at least 6 ",
+  "kAlreadyAccount": "Already have an account? Sig in",
+  "kNoAccount": "Don't have an account? Sign up",
+  "kSignUp": "Sign up",
+  "kSignIn": "Sign in",
+  "kDeposit": "Deposit",
+  "kWithdraw": "Withdraw",
+  "kTwoD": "2 D",
+  "kThreeD": "3 D",
+  "kHistory": "History",
+  "kHelp": "Help"
+
+}
