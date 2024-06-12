@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shwetaiksan/constants/img.dart';
 import 'package:shwetaiksan/screens/deposit/deposit_details_screen.dart';
 import 'package:shwetaiksan/screens/login/login_screen.dart';
@@ -41,7 +43,23 @@ class WithdrawProvider extends ChangeNotifier{
     Payment(4, kAYAPayImgPath,"AYA Pay"),
     Payment(4, kWaveMoneyImgPath,"Wave Money"),
   ];
-
+  String selectedLan = "", showLan = "";
+  init(BuildContext context) async {
+    SharedPreferences sh = await SharedPreferences.getInstance();
+    var lan = sh.getString("lan");
+    if (lan == "en" || lan == null) {
+      context.setLocale(const Locale("en"));
+      selectedLan = "English";
+      showLan = selectedLan;
+      notifyListeners();
+    }
+    if (lan == "my") {
+      context.setLocale(const Locale("my"));
+      selectedLan = "မြန်မာ";
+      showLan = selectedLan;
+      notifyListeners();
+    }
+  }
   WithdrawProvider(){
     phoneNumber="09963258741";
     name="Thet Zaw Latt";

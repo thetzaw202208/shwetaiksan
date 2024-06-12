@@ -1,9 +1,12 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shwetaiksan/provider/two_d_provider.dart';
 import 'package:shwetaiksan/screens/2d/ready_made_choice_two_d_screen.dart';
 import 'package:shwetaiksan/utils/screen_extension.dart';
+
+import '../../generated/locale_keys.g.dart';
 
 class TwoDScreen extends StatelessWidget {
   const TwoDScreen({super.key});
@@ -41,9 +44,9 @@ class TwoDScreen extends StatelessWidget {
                           //     borderRadius: BorderRadius.circular(10)),
                           // padding: const EdgeInsets.symmetric(
                           //     horizontal: 15, vertical: 10),
-                          child: const Center(
+                          child:  Center(
                               child: Text(
-                            "အသင့်ရွေး",
+                                LocaleKeys.kReadyMade.tr(),
                             style: TextStyle(
                                 fontSize: 13,
                                 color: Colors.blue,
@@ -166,7 +169,7 @@ class TwoDScreen extends StatelessWidget {
                     child: TextField(
                       controller: data.amount,
                       decoration: InputDecoration(
-                          hintText: "ငွေပမာဏ ရိုက်ထည့်ပါ",
+                          hintText: LocaleKeys.kEnterAmount.tr(),
 
                           //hintTextDirection: TextDirection.ltr,
                           hintStyle: TextStyle(
@@ -195,9 +198,9 @@ class TwoDScreen extends StatelessWidget {
                           context: context,
                           dialogType: DialogType.error,
                           animType: AnimType.rightSlide,
-                          title: 'သတိပြုရန်',
+                          title: LocaleKeys.kWarning.tr(),
                           desc:
-                          '၁၀၀ ၏ ဆတိုး ပမာဏသာ ခွင့်ပြုပါသည်',
+                          LocaleKeys.kTwoDAmountWarnings.tr(),
                           // btnCancelOnPress: () {},
                           btnOkOnPress: () {},
                         ).show();
@@ -207,9 +210,9 @@ class TwoDScreen extends StatelessWidget {
                         context: context,
                         dialogType: DialogType.error,
                         animType: AnimType.rightSlide,
-                        title: 'သတိပြုရန်',
+                        title: LocaleKeys.kWarning.tr(),
                         desc:
-                        'အချက်အလက် မပြည့်စုံပါ',
+                        LocaleKeys.kIncomplete.tr(),
                         // btnCancelOnPress: () {},
                         btnOkOnPress: () {},
                       ).show();
@@ -224,9 +227,9 @@ class TwoDScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 236, 196, 64),
                           borderRadius: BorderRadius.circular(10)),
-                      child: const Center(
+                      child:  Center(
                           child: Text(
-                        "ထိုးမည်",
+                        LocaleKeys.kBet.tr(),
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

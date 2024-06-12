@@ -9,9 +9,12 @@ String twoURL = dotenv.get("twoURL", fallback: null);
 // live="live"
 const String resultEndpoint = "2d_result";
 const String liveEndpoint = "live";
-const String register="register.php";
-const String login="login.php";
-const String getBalance="get_balance.php";
+const String registerEndPoint="register.php";
+const String loginEndPoint="login.php";
+const String getBalanceEndPoint="get_balance.php";
+const String twoDOrderAmEndPoint="two_d_record_am.php";
+const String twoDOrderPmEndPoint="two_d_record_pm.php";
+const String historyEndPoint="history_data.php";
 
 ///Authorization token
 String authorizationToken =dotenv.get("API_TOKEN", fallback: null);

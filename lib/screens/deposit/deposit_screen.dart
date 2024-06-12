@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shwetaiksan/constants/color_const.dart';
 import 'package:shwetaiksan/constants/font.dart';
 import 'package:shwetaiksan/provider/deposit_provider.dart';
+
+import '../../generated/locale_keys.g.dart';
 
 class SocialContact {
   int id;
@@ -27,7 +29,7 @@ class DepositScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Deposit",style: appBarTextStyle,),
+        title: Text(LocaleKeys.kDeposit.tr(),style: appBarTextStyle,),
       ),
       body: Consumer<DepositProvider>(
         builder: (context, data, _) => Padding(
@@ -37,26 +39,26 @@ class DepositScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                  "* သတိပြုရန် အချက်များ",
+                  LocaleKeys.kNotice.tr(),
                   style: errorTextStyle,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                    "ကျေးဇူးပြုပြီး ဖော်ပြထားသော နံပါတ်သို့ ငွေလွှဲပြီးသည့်နောက် ၁၀ မိနစ်အတွင်း ငွေသွင်းပြီးကြောင်း လျှောက်လွှာတင်ပါ။ ", style: labelSmallTextStyle,),
-              ), SizedBox(
+                  LocaleKeys.kNotice1.tr(), style: labelSmallTextStyle,),
+              ), const SizedBox(
                 height: 5,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                    "အကယ်၍ သင့်အကောင့်ထဲသို့ ငွေမရောက်လာခြင်း သို့မဟုတ် မေးခွန်းတစုံတရာရှိလျှင် အောက်တွင် ဖော်ပြထားသော ချန်နယ်များမှ တဆင့် ဆက်သွယ်နိုင်ပါသည်။", style: labelSmallTextStyle,),
+                  LocaleKeys.kNotice2.tr(), style: labelSmallTextStyle,),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               SizedBox(
@@ -86,24 +88,24 @@ class DepositScreen extends StatelessWidget {
                       );
                     }),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                  "အောက်ဖော်ပြပါ payment များဖြင့် ငွေဖြည့်သွင်းနိုင်ပါသည်",
+                  LocaleKeys.kAcceptedPaymentType.tr(),
                   style: labelSmallTextStyle,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               SizedBox(
                 height: (190 * data.paymentList.length).toDouble(),
                 child: GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
@@ -127,7 +129,7 @@ class DepositScreen extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  SizedBox(height: 5,),
+                                  const SizedBox(height: 5,),
                                   Image.asset(
                                     data.paymentList[index].imgPath,
                                     width: 80,
@@ -138,7 +140,7 @@ class DepositScreen extends StatelessWidget {
                                       height: 30,
                                       decoration: BoxDecoration(
                                         color: Colors.green.withOpacity(0.7),
-                                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5),bottomRight: Radius.circular(5))),
+                                          borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(5),bottomRight: Radius.circular(5))),
                                       child: Center(
                                         child: Text(
                                           data.paymentList[index].name,

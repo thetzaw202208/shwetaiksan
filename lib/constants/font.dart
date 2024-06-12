@@ -14,9 +14,12 @@ const double font16 = 16;
 const double font18 = 18;
 
 const TextStyle labelTextStyle = TextStyle(fontSize: font14, fontWeight: bold);
+const TextStyle incomeTextStyle = TextStyle(fontSize: font16, fontWeight: bold,color: greenColor);
+const TextStyle outComeTextStyle = TextStyle(fontSize: font16, fontWeight: bold,color: errorColor);
+const TextStyle leadingTextStyle = TextStyle(fontSize: font16, fontWeight: bold,color: whiteColor);
 const TextStyle labelSmallTextStyle = TextStyle(fontSize: font13, fontWeight: bold);
 const TextStyle appBarTextStyle = TextStyle(fontSize: font16, fontWeight: bold);
 const TextStyle paymentLabelTextStyle = TextStyle(fontSize: font14, fontWeight: bold,color: whiteColor);
-const TextStyle menuLabelTextStyle = TextStyle(fontSize: font12, fontWeight: bold,color: whiteColor);
+const TextStyle menuLabelTextStyle = TextStyle(fontSize: font13, fontWeight: bold,color: whiteColor);
 const TextStyle errorTextStyle = TextStyle(fontSize: font14, fontWeight: bold,color: Colors.red);
 const TextStyle copyTextStyle = TextStyle(fontSize: font12, fontWeight: bold,color: Colors.red);

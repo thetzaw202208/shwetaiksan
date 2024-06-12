@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shwetaiksan/constants/color_const.dart';
 import 'package:shwetaiksan/screens/home/home_screen.dart';
+import 'package:shwetaiksan/screens/login/login_screen.dart';
 import 'package:shwetaiksan/utils/screen_extension.dart';
 
 import '../network/data_agent/register/register_data_agent.dart';
@@ -54,7 +55,7 @@ registerUser(String name,String phone,String password,BuildContext context){
          
           btnOkOnPress: () {
             context.navigateAndRemoveUntil(
-                const MyHomePage(), true);
+                const LoginScreen(), true);
           },
         ).show();
         notifyListeners();
@@ -70,8 +71,8 @@ registerUser(String name,String phone,String password,BuildContext context){
           btnOkText: "အိုကေ",
 
           btnOkOnPress: () {
-            context.navigateAndRemoveUntil(
-                const MyHomePage(), true);
+            // context.navigateAndRemoveUntil(
+            //     const MyHomePage(), true);
           },
         ).show();
         notifyListeners();

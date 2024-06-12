@@ -1,14 +1,24 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shwetaiksan/network/data_agent/two_d_order_am/two_d_order_am_data_agent.dart';
+import 'package:shwetaiksan/network/data_agent/two_d_order_am/two_d_order_data_agent_impl.dart';
 import 'package:shwetaiksan/network/static_vo/number_and_amount_vo.dart';
 import 'package:shwetaiksan/screens/2d/details_screen.dart';
+import 'package:shwetaiksan/screens/history/history.dart';
 import 'package:shwetaiksan/utils/screen_extension.dart';
+
+import '../generated/locale_keys.g.dart';
+import '../screens/home/home_screen.dart';
 
 class TwoDProvider extends ChangeNotifier {
   var items = [];
   var numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  TextEditingController amount=TextEditingController();
-  bool isLoading=false;
+  TextEditingController amount = TextEditingController();
+  TwoDOrderAmDataAgent twoDOrderAmDataAgent = TwoDOrderAmDataAgentImpl();
+  bool isLoading = false;
   bool isSelect = false;
   bool isPrefix = false;
   bool isSuffix = false;
@@ -18,7 +28,7 @@ class TwoDProvider extends ChangeNotifier {
   bool isZeroPrefix = false;
   bool isZeroSuffix = false;
   List<int> selectedNumber = [];
-  List<NumberAndAmount> orderList=[];
+  List<NumberAndAmount> orderList = [];
   List<String> readyMadeTitle = [
     "အပူး",
     "ထိပ်",
@@ -33,8 +43,7 @@ class TwoDProvider extends ChangeNotifier {
   int? selectedReadyMade;
   bool selectedRM = false;
 
-  int totalAmount=0;
-
+  int totalAmount = 0;
 
   List<int> coupleList = [00, 11, 22, 33, 44, 55, 66, 77, 88, 99];
   List<int> zeroOpenList = [00, 01, 02, 03, 04, 05, 06, 07, 08, 09];
@@ -282,14 +291,16 @@ class TwoDProvider extends ChangeNotifier {
     89
   ];
 
-  enableLoading(){
-    isLoading=true;
+  enableLoading() {
+    isLoading = true;
     notifyListeners();
   }
-  disableLoading(){
-    isLoading=false;
+
+  disableLoading() {
+    isLoading = false;
     notifyListeners();
   }
+
   TwoDProvider() {
     for (var i = 0; i < 100; i++) {
       items.add(i);
@@ -327,19 +338,79 @@ class TwoDProvider extends ChangeNotifier {
     isPrefix = !isPrefix;
     notifyListeners();
   }
+
   showHideSuffix() {
     isSuffix = !isSuffix;
     notifyListeners();
   }
 
-  twoDOrder(int amount,BuildContext context){
-    totalAmount=amount*selectedNumber.length;
-    for(var i=0;i<selectedNumber.length;i++){
+  twoDOrder(int amount, BuildContext context) {
+    totalAmount = amount * selectedNumber.length;
+    for (var i = 0; i < selectedNumber.length; i++) {
       orderList.add(NumberAndAmount(selectedNumber[i], amount));
-
     }
 
-    context.navigateAndRemoveUntil(const TwoDDetailsScreen(),true);
+    context.navigateAndRemoveUntil(const TwoDDetailsScreen(), true);
+    notifyListeners();
+  }
+
+  twoDRequest(BuildContext context) async {
+    List<int> amountList = [];
+    SharedPreferences sh = await SharedPreferences.getInstance();
+    var phone = sh.getString("phone") ?? "";
+    for (var i = 0; i < orderList.length; i++) {
+      amountList.add(orderList[i].amount);
+    }
+    notifyListeners();
+    var month = "";
+    if (DateTime.now().month.toString().length == 1) {
+      month = "0${DateTime.now().month}";
+    } else {
+      month = "${DateTime.now().month}";
+    }
+
+    var date = "${DateTime.now().year}-$month-${DateTime.now().day}";
+    print("Order request: ${amountList.toString()}");
+    var type = "2D Betting";
+    twoDOrderAmDataAgent
+        .twoDOrderAm(phone, amountList, selectedNumber, date,type, 0)
+        .then((value) {
+      if (value.code == 200) {
+        print("Order Success");
+        disableLoading();
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.success,
+          animType: AnimType.rightSlide,
+          title: LocaleKeys.kCongratulations.tr(),
+          desc: LocaleKeys.kSuccessTransaction.tr(),
+          btnCancelText: LocaleKeys.kHistory.tr(),
+          btnOkText: LocaleKeys.KHome.tr(),
+          btnCancelOnPress: () {
+            context.navigateAndRemoveUntil(const HistoryScreen(), false);
+          },
+          btnOkOnPress: () {
+            context.navigateAndRemoveUntil(const MyHomePage(), false);
+          },
+        ).show();
+        clearData();
+      }else{
+        disableLoading();
+        notifyListeners();
+      }
+    }).catchError((error) {
+      disableLoading();
+      notifyListeners();
+      print("Order Error");
+      print(error.toString());
+    });
+    print("Order List: $orderList");
+  }
+
+  clearData() {
+    selectedNumber.clear();
+    orderList.clear();
+    amount.clear();
     notifyListeners();
   }
 
@@ -347,7 +418,7 @@ class TwoDProvider extends ChangeNotifier {
     selectedReadyMade = index;
     selectedRM = !selectedRM;
     selectedSuffixNumber = null;
-    selectedPTNumber=null;
+    selectedPTNumber = null;
     selectedPrefixNumber = null;
     switch (index) {
       case 0:
@@ -362,19 +433,19 @@ class TwoDProvider extends ChangeNotifier {
         selectNatKhet();
       case 5:
         showHidePrefix();
-
-
     }
     notifyListeners();
   }
-  selectPower(){
+
+  selectPower() {
     selectedNumber.clear();
     for (var i = 0; i < powerList.length; i++) {
       selectedNumber.add(powerList[i]);
       notifyListeners();
     }
   }
-  selectNatKhet(){
+
+  selectNatKhet() {
     selectedNumber.clear();
     for (var i = 0; i < natKhetList.length; i++) {
       selectedNumber.add(natKhetList[i]);
@@ -385,7 +456,7 @@ class TwoDProvider extends ChangeNotifier {
   selectPrefix(int number) {
     selectedNumber.clear();
     selectedSuffixNumber = null;
-    selectedPTNumber=null;
+    selectedPTNumber = null;
     selectedPrefixNumber = number;
     switch (number) {
       case 0:
@@ -443,72 +514,73 @@ class TwoDProvider extends ChangeNotifier {
 
     notifyListeners();
   }
-selectPT(number){
-  selectedNumber.clear();
-  selectedPrefixNumber=null;
-  selectedSuffixNumber = null;
-  selectedPTNumber=number;
-  switch (number) {
-    case 0:
-      for (var i = 0; i < zeroPT.length; i++) {
-        selectedNumber.add(zeroPT[i]);
-        notifyListeners();
-      }
 
-    case 1:
-      for (var i = 0; i < onePT.length; i++) {
-        selectedNumber.add(onePT[i]);
-        notifyListeners();
-      }
-    case 2:
-      for (var i = 0; i < twoPT.length; i++) {
-        selectedNumber.add(twoPT[i]);
-        notifyListeners();
-      }
-    case 3:
-      for (var i = 0; i < threePT.length; i++) {
-        selectedNumber.add(threePT[i]);
-        notifyListeners();
-      }
-    case 4:
-      for (var i = 0; i < fourPT.length; i++) {
-        selectedNumber.add(fourPT[i]);
-        notifyListeners();
-      }
-    case 5:
-      for (var i = 0; i < fivePT.length; i++) {
-        selectedNumber.add(fivePT[i]);
-        notifyListeners();
-      }
-    case 6:
-      for (var i = 0; i < sixPT.length; i++) {
-        selectedNumber.add(sixPT[i]);
-        notifyListeners();
-      }
-    case 7:
-      for (var i = 0; i < sevenPT.length; i++) {
-        selectedNumber.add(sevenPT[i]);
-        notifyListeners();
-      }
-    case 8:
-      for (var i = 0; i < eightPT.length; i++) {
-        selectedNumber.add(eightPT[i]);
-        notifyListeners();
-      }
-    case 9:
-      for (var i = 0; i < ninePT.length; i++) {
-        selectedNumber.add(ninePT[i]);
-        notifyListeners();
-      }
+  selectPT(number) {
+    selectedNumber.clear();
+    selectedPrefixNumber = null;
+    selectedSuffixNumber = null;
+    selectedPTNumber = number;
+    switch (number) {
+      case 0:
+        for (var i = 0; i < zeroPT.length; i++) {
+          selectedNumber.add(zeroPT[i]);
+          notifyListeners();
+        }
+
+      case 1:
+        for (var i = 0; i < onePT.length; i++) {
+          selectedNumber.add(onePT[i]);
+          notifyListeners();
+        }
+      case 2:
+        for (var i = 0; i < twoPT.length; i++) {
+          selectedNumber.add(twoPT[i]);
+          notifyListeners();
+        }
+      case 3:
+        for (var i = 0; i < threePT.length; i++) {
+          selectedNumber.add(threePT[i]);
+          notifyListeners();
+        }
+      case 4:
+        for (var i = 0; i < fourPT.length; i++) {
+          selectedNumber.add(fourPT[i]);
+          notifyListeners();
+        }
+      case 5:
+        for (var i = 0; i < fivePT.length; i++) {
+          selectedNumber.add(fivePT[i]);
+          notifyListeners();
+        }
+      case 6:
+        for (var i = 0; i < sixPT.length; i++) {
+          selectedNumber.add(sixPT[i]);
+          notifyListeners();
+        }
+      case 7:
+        for (var i = 0; i < sevenPT.length; i++) {
+          selectedNumber.add(sevenPT[i]);
+          notifyListeners();
+        }
+      case 8:
+        for (var i = 0; i < eightPT.length; i++) {
+          selectedNumber.add(eightPT[i]);
+          notifyListeners();
+        }
+      case 9:
+        for (var i = 0; i < ninePT.length; i++) {
+          selectedNumber.add(ninePT[i]);
+          notifyListeners();
+        }
+    }
+
+    notifyListeners();
   }
-
-  notifyListeners();
-}
 
   selectSuffix(int number) {
     selectedNumber.clear();
-selectedPrefixNumber=null;
-    selectedPTNumber=null;
+    selectedPrefixNumber = null;
+    selectedPTNumber = null;
     selectedSuffixNumber = number;
     switch (number) {
       case 0:

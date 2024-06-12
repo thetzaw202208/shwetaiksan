@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -168,7 +170,14 @@ class LoginProvider extends ChangeNotifier {
   loginUser(String phone, String password, BuildContext context) async {
     SharedPreferences sh = await SharedPreferences.getInstance();
 
-    _loginDataAgent.loginUser(phone, password).then((value) {
+    try {
+      final value = await _loginDataAgent.loginUser(phone, password).timeout(
+        Duration(minutes: 1),
+        onTimeout: () {
+          throw TimeoutException('The connection has timed out, Please try again!');
+        },
+      );
+
       if (value.code == 200) {
         sh.setBool("isLogin", true);
         print("Here is data ${value.data?.phone}");
@@ -190,7 +199,31 @@ class LoginProvider extends ChangeNotifier {
         ).show();
         notifyListeners();
       }
-    });
+    } on TimeoutException catch (_) {
+      disableLoading();
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.rightSlide,
+        title: 'Timeout',
+        desc: 'The request has timed out. Please try again later.',
+        btnOkText: "OK",
+        btnOkOnPress: () {},
+      ).show();
+      notifyListeners();
+    } catch (error) {
+      disableLoading();
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.rightSlide,
+        title: 'Error',
+        desc: 'An unexpected error occurred. Please try again later.',
+        btnOkText: "OK",
+        btnOkOnPress: () {},
+      ).show();
+      notifyListeners();
+    }
   }
 
   void updateButtonColor() {

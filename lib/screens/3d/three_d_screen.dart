@@ -1,10 +1,15 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shwetaiksan/provider/three_d_provider.dart';
 import 'package:shwetaiksan/provider/two_d_provider.dart';
 import 'package:shwetaiksan/screens/2d/ready_made_choice_two_d_screen.dart';
+import 'package:shwetaiksan/screens/home/home_screen.dart';
 import 'package:shwetaiksan/utils/screen_extension.dart';
+
+import '../../constants/font.dart';
+import '../../generated/locale_keys.g.dart';
 
 class ThreeDScreen extends StatelessWidget {
   const ThreeDScreen({super.key});
@@ -27,7 +32,8 @@ class ThreeDScreen extends StatelessWidget {
                   children: [
                     GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          context.navigateAndRemoveUntil(
+                              const MyHomePage(), true);
                         },
                         child: Icon(Icons.arrow_back)),
                     // GestureDetector(
@@ -168,7 +174,7 @@ class ThreeDScreen extends StatelessWidget {
                     child: TextField(
                       controller: data.amount,
                       decoration: InputDecoration(
-                          hintText: "ငွေပမာဏ ရိုက်ထည့်ပါ",
+                          hintText: LocaleKeys.kEnterAmount.tr(),
 
                           //hintTextDirection: TextDirection.ltr,
                           hintStyle: TextStyle(
@@ -197,9 +203,9 @@ class ThreeDScreen extends StatelessWidget {
                           context: context,
                           dialogType: DialogType.error,
                           animType: AnimType.rightSlide,
-                          title: 'သတိပြုရန်',
+                          title: LocaleKeys.kWarning.tr(),
                           desc:
-                          '၁၀၀ ၏ ဆတိုး ပမာဏသာ ခွင့်ပြုပါသည်',
+                          LocaleKeys.kTwoDAmountWarnings.tr(),
                           // btnCancelOnPress: () {},
                           btnOkOnPress: () {},
                         ).show();
@@ -209,9 +215,9 @@ class ThreeDScreen extends StatelessWidget {
                         context: context,
                         dialogType: DialogType.error,
                         animType: AnimType.rightSlide,
-                        title: 'သတိပြုရန်',
+                        title: LocaleKeys.kWarning.tr(),
                         desc:
-                        'အချက်အလက် မပြည့်စုံပါ',
+                        LocaleKeys.kIncomplete.tr(),
                         // btnCancelOnPress: () {},
                         btnOkOnPress: () {},
                       ).show();
@@ -226,9 +232,9 @@ class ThreeDScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 236, 196, 64),
                           borderRadius: BorderRadius.circular(10)),
-                      child: const Center(
+                      child:  Center(
                           child: Text(
-                            "ထိုးမည်",
+                            LocaleKeys.kBet.tr(),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,

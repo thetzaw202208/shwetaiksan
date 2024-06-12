@@ -1,9 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shwetaiksan/constants/color_const.dart';
 import 'package:shwetaiksan/provider/two_d_provider.dart';
-import 'package:shwetaiksan/utils/screen_extension.dart';
+
+import '../../generated/locale_keys.g.dart';
 
 class ReadyMade2D extends StatelessWidget {
   const ReadyMade2D({super.key});
@@ -132,10 +134,10 @@ class ReadyMade2D extends StatelessWidget {
                   context: context,
                   dialogType: DialogType.warning,
                   animType: AnimType.rightSlide,
-                  title: 'ဝမ်းနည်းပါတယ်',
-                  desc: 'အနည်းဆုံးတစ်ခုရွေးချယ် ရပါမည်',
+                  title: LocaleKeys.kSad.tr(),
+                  desc: LocaleKeys.kPlsChooseOne.tr(),
 
-                  btnOkText: "ဝင်မည်",
+                  btnOkText: LocaleKeys.kOkay.tr(),
 
                   btnOkOnPress: () {
 
@@ -153,9 +155,9 @@ class ReadyMade2D extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 236, 196, 64),
                     borderRadius: BorderRadius.circular(10)),
-                child: const Center(
+                child:  Center(
                     child: Text(
-                      "သေချာပါသည်",
+                      LocaleKeys.kSure.tr(),
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

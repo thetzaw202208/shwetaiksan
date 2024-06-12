@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shwetaiksan/provider/withdraw_provider.dart';
 import 'package:shwetaiksan/screens/home/home_screen.dart';
 
 import 'login/login_screen.dart';
@@ -39,10 +41,15 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Image.asset("assets/images/launcher.png"),
-      ),
+    return Consumer<WithdrawProvider>(
+      builder: (context, data, _) {
+        data.init(context);
+        return Scaffold(
+        body: Center(
+          child: Image.asset("assets/images/launcher.png"),
+        ),
+      );}
+
     );
   }
 }

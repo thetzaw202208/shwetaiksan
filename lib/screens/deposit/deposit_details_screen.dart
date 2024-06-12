@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +10,11 @@ import 'package:shwetaiksan/constants/dimens.dart';
 import 'package:shwetaiksan/constants/font.dart';
 import 'package:shwetaiksan/constants/img.dart';
 import 'package:shwetaiksan/provider/deposit_provider.dart';
+import 'package:shwetaiksan/utils/screen_extension.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
+import '../../generated/locale_keys.g.dart';
+import '../home/home_screen.dart';
 
 class DepositDetailsScreen extends StatelessWidget {
   const DepositDetailsScreen({super.key, required this.image, required this.id, required this.name});
@@ -47,13 +52,13 @@ final int id;
                 color: Colors.blue.withOpacity(0.3),
                 child: Padding(
                   padding: EdgeInsets.all(10),
-                  child: Text("အော်ဒါတင်ခြင်း မပြုလုပ်မီ အောက်တွင်ဖော်ပြထားသော အကောင့်နံပါတ်သို့ ငွေအရင်လွှဲရန်လိုအပ်ပါသည်။",style: menuLabelTextStyle,),
+                  child: Text(LocaleKeys.kDepositInfo.tr(),style: menuLabelTextStyle,),
                 ),
               ),
               const SizedBox(height: 10,),
               Row(
                 children: [
-                   Text("$name အကောင့် ",style: labelSmallTextStyle,),
+                   Text("$name ${LocaleKeys.kAccount.tr()} ",style: labelSmallTextStyle,),
                   const SizedBox(width: 10,),
                   Text("${data.phoneNumber}"),
                   const SizedBox(width: 10,),
@@ -71,13 +76,13 @@ final int id;
                     child: Image.asset(kCopyImgPath,color: Colors.green,width: 20,height: 20,),
                   ),
                  SizedBox(width: 5,),
-                 if(data.onTapCopy) Text("Copied",style: copyTextStyle,),
+                 if(data.onTapCopy) Text(LocaleKeys.kCopied.tr(),style: copyTextStyle,),
                 ],
               ),
               const SizedBox(height: 10,),
               Row(
                 children: [
-                   Text("$name နာမည် ",style: labelSmallTextStyle,),
+                   Text("$name ${LocaleKeys.kAccountName.tr()}",style: labelSmallTextStyle,),
                   const SizedBox(width: 10,),
                   Text("${data.name}"),
                   const SizedBox(width: 10,),
@@ -104,7 +109,7 @@ final int id;
                 children: [
                   SizedBox(
                       width: MediaQuery.of(context).size.width * .3,
-                      child: const Text("Amount (1,000 - 1,000,000)",style: labelSmallTextStyle,)),
+                      child:  Text(LocaleKeys.kDepositLimit.tr(),style: labelSmallTextStyle,)),
                   SizedBox(
                     height: 40,
                     width: MediaQuery.of(context).size.width * .6,
@@ -136,7 +141,7 @@ final int id;
                 children: [
                   SizedBox(
                       width: MediaQuery.of(context).size.width * .3,
-                      child:  Text("သင့် $name အကောင့်",style: labelSmallTextStyle,)),
+                      child:  Text("${LocaleKeys.kYour.tr()} $name ${LocaleKeys.kAccount.tr()}",style: labelSmallTextStyle,)),
                   SizedBox(
                     height: 40,
                     width: MediaQuery.of(context).size.width * .6,
@@ -168,7 +173,7 @@ final int id;
                 children: [
                   SizedBox(
                       width: MediaQuery.of(context).size.width * .3,
-                      child:  Text("သင့် $name အကောင့်နာမည်",style: labelSmallTextStyle,)),
+                      child:  Text("${LocaleKeys.kYour.tr()} $name ${LocaleKeys.kAccountName.tr()}",style: labelSmallTextStyle,)),
                   SizedBox(
                     height: 40,
                     width: MediaQuery.of(context).size.width * .6,
@@ -200,7 +205,7 @@ final int id;
                 children: [
                   SizedBox(
                       width: MediaQuery.of(context).size.width * .3,
-                      child:  Text("$name လုပ်ဆောင်မှုအမှတ်",style: labelSmallTextStyle,)),
+                      child:  Text("$name ${LocaleKeys.kTransactionNumber.tr()}",style: labelSmallTextStyle,)),
                   SizedBox(
                     height: 40,
                     width: MediaQuery.of(context).size.width * .6,
@@ -233,14 +238,14 @@ final int id;
                   padding: EdgeInsets.all(10),
                   child: Column(
                     children: [
-                      Text("ငွေလွှဲရာတွင် မှတ်ချက်၌ ကျေးဇူးပြု၍ အောက်ဖော်ပြပါ အချက်များထဲမှ တစ်ခုရေးသားပေးပါရန်။",style: labelSmallTextStyle,),
-                      Text("Online shopping, buy goods, buy books, buy foods စသည်ဖြင့်",style: paymentLabelTextStyle,)
+                      Text(LocaleKeys.kTransactionRemark.tr(),style: labelSmallTextStyle,),
+                      Text(LocaleKeys.kTransactionRemarkHint.tr(),style: paymentLabelTextStyle,)
                     ],
                   ),
                 ),
               ),
               const SizedBox(height: 10,),
-              Text("$name ငွေဖြည့်နည်း ကြည့်ရန်",style: errorTextStyle,),
+              Text("${LocaleKeys.kHowToDeposit.tr()}",style: errorTextStyle,),
               const SizedBox(height: 10,),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
@@ -274,16 +279,17 @@ final int id;
               context: context,
               dialogType: DialogType.info,
               animType: AnimType.rightSlide,
-              title: 'အောင်မြင်ပါသည်',
+              title: LocaleKeys.kSuccess.tr(),
               titleTextStyle: TextStyle(
                 fontSize: 12,fontWeight: bold
               ),
-              desc: 'ခေတ္တစောင့်ဆိုင်းပေးပါ',
+              desc: LocaleKeys.kPleaseWait.tr(),
 
-              btnOkText: "အိုကေ",
+              btnOkText: LocaleKeys.kOkay.tr(),
 
               btnOkOnPress: () {
 
+                context.navigateAndRemoveUntil(const MyHomePage(),false);
               },
             ).show();
           },
@@ -294,7 +300,7 @@ final int id;
               borderRadius: BorderRadius.circular(smallBorder),
               color: goldColor,
             ),
-            child: const Center(child: Text("အတည်ပြုမည်",style: labelTextStyle,)),
+            child:  Center(child: Text(LocaleKeys.kConfirm.tr(),style: labelTextStyle,)),
           ),
         ),
       ),

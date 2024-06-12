@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,8 +9,13 @@ import 'package:shwetaiksan/constants/color_const.dart';
 import 'package:shwetaiksan/constants/dimens.dart';
 import 'package:shwetaiksan/constants/font.dart';
 import 'package:shwetaiksan/constants/img.dart';
+import 'package:shwetaiksan/generated/locale_keys.g.dart';
 import 'package:shwetaiksan/provider/deposit_provider.dart';
+import 'package:shwetaiksan/screens/home/home_screen.dart';
+import 'package:shwetaiksan/utils/screen_extension.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
+import '../../provider/withdraw_provider.dart';
 
 class WithdrawDetailsScreen extends StatelessWidget {
   const WithdrawDetailsScreen({super.key, required this.image, required this.id, required this.name});
@@ -27,7 +33,7 @@ class WithdrawDetailsScreen extends StatelessWidget {
       //     }, icon: const Icon(Icons.close_rounded))
       //   ],
       // ),
-      body: Consumer<DepositProvider>(
+      body: Consumer<WithdrawProvider>(
         builder: (context,data,_)=>
             Padding(
               padding: const EdgeInsets.all(10.0),
@@ -50,8 +56,8 @@ class WithdrawDetailsScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("အော်ဒါတင်ခြင်း မပြုလုပ်မီ ငွေလက်ကျန် အရင်စစ်ဆေးပါ။",style: menuLabelTextStyle,),
-                          Text("သင့်အကောင့်ထဲသို့ ငွေရောက်ရန် ကြာမြင့်ချိန်သည် အနည်းဆုံး ၁၀ မိနစ်မှ ငွေထုတ်သူ အနည်းအများပေါ် မူတည်၍ နာရီပိုင်းအထိကြာမြင့်နိုင်ပါ၍ နားလည်ပေးနိုင်ပါရန် ကြိုတင် အသိပေးအပ်ပါသည်။",style: menuLabelTextStyle,),
+                          Text(LocaleKeys.kCheckBalanceBeforeWithdraw.tr(),style: menuLabelTextStyle,),
+                          Text(LocaleKeys.kWithdrawInfo.tr(),style: menuLabelTextStyle,),
                         ],
                       ),
                     ),
@@ -110,7 +116,7 @@ class WithdrawDetailsScreen extends StatelessWidget {
                     children: [
                       SizedBox(
                           width: MediaQuery.of(context).size.width * .3,
-                          child: const Text("Amount (2,000 - 1,000,000)",style: labelSmallTextStyle,)),
+                          child:  Text(LocaleKeys.kDepositLimit.tr(),style: labelSmallTextStyle,)),
                       SizedBox(
                         height: 40,
                         width: MediaQuery.of(context).size.width * .6,
@@ -142,7 +148,7 @@ class WithdrawDetailsScreen extends StatelessWidget {
                     children: [
                       SizedBox(
                           width: MediaQuery.of(context).size.width * .3,
-                          child:  Text("သင့် $name အကောင့်",style: labelSmallTextStyle,)),
+                          child:  Text("${LocaleKeys.kYour.tr()} $name ${LocaleKeys.kAccount.tr()}",style: labelSmallTextStyle,)),
                       SizedBox(
                         height: 40,
                         width: MediaQuery.of(context).size.width * .6,
@@ -174,7 +180,7 @@ class WithdrawDetailsScreen extends StatelessWidget {
                     children: [
                       SizedBox(
                           width: MediaQuery.of(context).size.width * .3,
-                          child:  Text("သင့် $name အကောင့်နာမည်",style: labelSmallTextStyle,)),
+                          child:  Text("${LocaleKeys.kYour.tr()} $name ${LocaleKeys.kAccountName.tr()}",style: labelSmallTextStyle,)),
                       SizedBox(
                         height: 40,
                         width: MediaQuery.of(context).size.width * .6,
@@ -201,51 +207,21 @@ class WithdrawDetailsScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10,),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     SizedBox(
-                  //         width: MediaQuery.of(context).size.width * .3,
-                  //         child:  Text("$name လုပ်ဆောင်မှုအမှတ်",style: labelSmallTextStyle,)),
-                  //     SizedBox(
-                  //       height: 40,
-                  //       width: MediaQuery.of(context).size.width * .6,
-                  //       child: TextField(
-                  //         controller: data.transactionID,
-                  //         decoration: InputDecoration(
-                  //           //hintText: "ငွေပမာဏ ရိုက်ထည့်ပါ",
-                  //
-                  //           //hintTextDirection: TextDirection.ltr,
-                  //             hintStyle: TextStyle(
-                  //               color: Colors.black.withOpacity(0.2),
-                  //               fontSize: 14,
-                  //             ),
-                  //             contentPadding: const EdgeInsets.only(
-                  //                 top: 10, right: 10, left: 10),
-                  //             border: OutlineInputBorder(
-                  //                 borderSide: const BorderSide(color: Colors.blueGrey),
-                  //                 borderRadius: BorderRadius.circular(10))),
-                  //         keyboardType: TextInputType.number,
-                  //         style: const TextStyle(
-                  //             color: Colors.black, fontWeight: FontWeight.bold),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  // const SizedBox(height: 10,),
+
 
 
                   Padding(
                     padding: EdgeInsets.all(10),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("ည ၁၂ နာရီမှ နောက်တနေ့နံနက် ၉ နာရီ အတွင်း ငွေထုတ်ခြင်း ဆောင်ရွက်ပေးနိုင်မည် မဟုတ်ပါ။",style: copyTextStyle,),
-                        Text("ငွေထုတ်ချိန်အား နံနက် ၉ နာရီ  -  ည ၁၂ နာရီ မတိုင်ခင် အထိသာ လက်ခံထားပါသည်။",style: copyTextStyle,)
+                        Text(LocaleKeys.kWithdrawCloseTime.tr(),style: copyTextStyle,),
+                        Text(LocaleKeys.kWithdrawOpenTime.tr(),style: copyTextStyle,)
                       ],
                     ),
                   ),
                   const SizedBox(height: 10,),
-                  Text("$name ငွေထုတ်နည်း ကြည့်ရန်",style: labelSmallTextStyle,),
+                  Text("${LocaleKeys.kHowToWithdraw.tr()}",style: labelSmallTextStyle,),
                   const SizedBox(height: 10,),
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
@@ -279,15 +255,15 @@ class WithdrawDetailsScreen extends StatelessWidget {
               context: context,
               dialogType: DialogType.info,
               animType: AnimType.rightSlide,
-              title: 'အောင်မြင်ပါသည်',
-              desc: 'ခေတ္တစောင့်ဆိုင်းပေးပါ',
+              title: LocaleKeys.kSuccess.tr(),
+              desc: LocaleKeys.kPleaseWait.tr(),
               titleTextStyle: TextStyle(
                   fontSize: 12,fontWeight: bold
               ),
-              btnOkText: "အိုကေ",
+              btnOkText: LocaleKeys.kOkay.tr(),
 
               btnOkOnPress: () {
-
+context.navigateAndRemoveUntil(const MyHomePage(),false);
               },
             ).show();
           },
@@ -298,7 +274,7 @@ class WithdrawDetailsScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(smallBorder),
               color: goldColor,
             ),
-            child: const Center(child: Text("အတည်ပြုမည်",style: labelTextStyle,)),
+            child:  Center(child: Text(LocaleKeys.kConfirm.tr(),style: labelTextStyle,)),
           ),
         ),
       ),

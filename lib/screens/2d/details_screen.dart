@@ -1,16 +1,12 @@
-import 'dart:ui';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dotted_line/dotted_line.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:shwetaiksan/provider/two_d_provider.dart';
-import 'package:shwetaiksan/screens/home/home_screen.dart';
-import 'package:shwetaiksan/utils/screen_extension.dart';
 
-import '../../utils/dialogs.dart';
+import '../../generated/locale_keys.g.dart';
+
 
 class TwoDDetailsScreen extends StatelessWidget {
   const TwoDDetailsScreen({super.key});
@@ -50,21 +46,21 @@ class TwoDDetailsScreen extends StatelessWidget {
                     borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10))),
-                child: const Row(
+                child:  Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("ဂဏန်း",
+                    Text(LocaleKeys.kNumber.tr(),
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                             color: Colors.black)),
-                    Text("ငွေပမာဏ",
+                    Text(LocaleKeys.kAmount.tr(),
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                             color: Colors.black)),
-                    Text("ပြင် / ဖျက်",
+                    Text(LocaleKeys.kEditDelete.tr(),
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -127,20 +123,20 @@ class TwoDDetailsScreen extends StatelessWidget {
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.red)),
-                        const Text(
-                          "  ကွက်",
+                         Text(
+                           LocaleKeys.kNumberQuantity.tr(),
                         ),
                       ],
                     ),
                     Row(
                       children: [
-                        const Text("စုစုပေါင်းထိုးငွေ  : "),
+                         Text(LocaleKeys.kTotalAmount.tr()),
                         Text(" ${data.totalAmount} ",
                             style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.red)),
-                        const Text(" ကျပ်"),
+                         Text(LocaleKeys.kKyat.tr()),
                       ],
                     ),
                   ],
@@ -160,31 +156,15 @@ class TwoDDetailsScreen extends StatelessWidget {
                 dialogType: DialogType.warning,
                 animType: AnimType.rightSlide,
                 title: '',
-                desc: 'သေချာပြီလား',
-                btnCancelText: "ပြန်စစ်ဆေးမည်",
-                btnOkText: "သေချာပြီ",
+                desc: LocaleKeys.kAreUSure.tr(),
+                btnCancelText: LocaleKeys.kCheckBack.tr(),
+                btnOkText: LocaleKeys.kSure.tr(),
                 btnCancelOnPress: () {},
                 btnOkOnPress: () {
                   data.enableLoading();
                   Future.delayed(const Duration(seconds: 2), () {
-                    data.disableLoading();
-                    AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.success,
-                      animType: AnimType.rightSlide,
-                      title: 'ဂုဏ်ယူပါတယ်',
-                      desc: 'လုပ်ဆောင်မှု အောင်မြင်ပါသည်',
-                      btnCancelText: "မှတ်တမ်း",
-                      btnOkText: "မူလ",
-                      btnCancelOnPress: () {
-                        context.navigateAndRemoveUntil(
-                            const MyHomePage(), false);
-                      },
-                      btnOkOnPress: () {
-                        context.navigateAndRemoveUntil(
-                            const MyHomePage(), false);
-                      },
-                    ).show();
+
+                   data.twoDRequest(context);
                   });
                 },
               ).show();
@@ -206,8 +186,8 @@ class TwoDDetailsScreen extends StatelessWidget {
                             child: CircularProgressIndicator(
                               color: Colors.white,
                             ))
-                        : const Text(
-                            "ထိုးမည်",
+                        :  Text(
+                            LocaleKeys.kBet.tr(),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,

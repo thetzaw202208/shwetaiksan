@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shwetaiksan/constants/color_const.dart';
 import 'package:shwetaiksan/constants/font.dart';
+import 'package:shwetaiksan/generated/locale_keys.g.dart';
 import 'package:shwetaiksan/provider/deposit_provider.dart';
 import 'package:shwetaiksan/provider/withdraw_provider.dart';
 
@@ -28,7 +30,7 @@ class WithdrawScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Withdraw",style: appBarTextStyle,),
+        title: Text(LocaleKeys.kWithdraw.tr(),style: appBarTextStyle,),
       ),
       body: Consumer<WithdrawProvider>(
         builder: (context, data, _) => Padding(
@@ -38,7 +40,7 @@ class WithdrawScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                  "* သတိပြုရန် အချက်များ",
+                  LocaleKeys.kNotice.tr(),
                   style: errorTextStyle,
                 ),
               ),
@@ -55,7 +57,7 @@ class WithdrawScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                  "အကယ်၍ သင့်ငွေလက်ခံမရရှိခြင်း သို့မဟုတ် မေးခွန်းတစုံတရာရှိလျှင် အောက်တွင် ဖော်ပြထားသော ချန်နယ်များမှ တဆင့် ဆက်သွယ်နိုင်ပါသည်။", style: labelSmallTextStyle,),
+                  LocaleKeys.kNotice2.tr(), style: labelSmallTextStyle,),
               ),
               SizedBox(
                 height: 10,
@@ -93,7 +95,7 @@ class WithdrawScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                  "အောက်ဖော်ပြပါ payment များဖြင့် ငွေထုတ်ယူနိုင်ပါသည်",
+                  LocaleKeys.kAcceptedPaymentTypeWithdraw.tr(),
                   style: labelSmallTextStyle,
                 ),
               ),

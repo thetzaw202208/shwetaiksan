@@ -3,7 +3,8 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 class RewardedAdManager {
   static const String adUnitId = 'ca-app-pub-7319269804560504/6645907620'; // Real IDs////ca-app-pub-1201205120535699/3957153119
   static const String bannerID = 'ca-app-pub-3940256099942544/6300978111'; // Real IDs////ca-app-pub-1201205120535699/2003258837
-
+//ca-app-pub-1201205120535699~5086377275
+  //ca-app-pub-1201205120535699/6786471758
   RewardedAd? _rewardedAd;
 
   static initialization(){

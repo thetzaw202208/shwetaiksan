@@ -12,5 +12,6 @@ LinearGradient linearAppBar = const LinearGradient(
 const Color yellowColor=Colors.amberAccent;
 const Color errorColor=Colors.red;
 const Color whiteColor=Colors.white;
+const Color greenColor=Colors.green;
 const Color blackColor=Colors.black;
 const Color goldColor=Color.fromARGB(255, 236, 196, 64);
